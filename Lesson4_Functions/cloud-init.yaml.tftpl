@@ -1,0 +1,27 @@
+#cloud-config
+datasource:
+  Ec2:
+    strict_id: false
+ssh_pwauth: no
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDdQTRy/fnTjbxO9zZUhgb3cD7yobmTPEYjZaeFIaqQ2U4sEKD5cm9tsT/l+nM/sgECAOdIK+MdKR5J8LyTYFP2ViQvNGJ3Q6cJHcGHoQk39fvbNSYJHEMK1JODaBNfSEHe9Vvxfi+64vPPC/yKcn7nEVFgbmu7lq/SuqcJLlLv+qIu80/p4XhzuclVrXAGfdyoakSYkUTBJUqjKsVJxEq6z+bQAujax2MSWbN0pNVCxijrU8ntN5MFCNrtNqZDXEtuF3V3fGJkgXfahRDn2cKBQGaCTBzqKTn0ifhOyn5sHOGKP/zHpxHFFqGojXmHPEbjvFxZ8a7vMFPOw2wtNav1DjI+0zlYlK8oUMm4ucfv4ZkJV2jIEQW1vUcTuJmWn2ARkiQJ7Pou8crq5s4q/zyNnjkvclLo2lslBL4c3BVIUoeWCm0nzipXPO755NoHZW6V/sBH7rWKbpi/3FSo+NF7DrJQHn3xnCZe7yI8q4dqpZAkP+BIeX76In/iCCjyJ1E= frodos@frodos-laptop
+package_update: false
+package_upgrade: false
+packages:
+  - nginx
+runcmd:
+  - |
+    sudo tee -a /var/www/html/index.nginx-debian.html > /dev/null <<'EOF'
+    <!doctype html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <title>Terraform provisioned</title>
+    </head>
+    <body>
+        <h1>Endpoints</h1>
+        <p>We have just provisioned YDB. You can connect to it via: <br><b>${ydb_connect_string}</b></p>
+        <p>We have just provisioned Yandex Object Storage. You can find it here: <br><b>${bucket_domain_name}</b></p>
+    </body>
+    </html>
+    EOF
