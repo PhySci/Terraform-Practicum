@@ -79,7 +79,7 @@ resource "yandex_storage_bucket" "this" {
   access_key = yandex_iam_service_account_static_access_key.this.access_key
   secret_key = yandex_iam_service_account_static_access_key.this.secret_key
 
-  depends_on = [ yandex_resourcemanager_folder_iam_member.storage_editor ]
+  depends_on = [yandex_resourcemanager_folder_iam_member.storage_editor]
 }
 
 resource "random_string" "bucket_name" {
